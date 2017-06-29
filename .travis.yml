@@ -1,0 +1,28 @@
+language: c
+sudo: false
+dist: trusty
+
+addons:
+  apt:
+    sources:
+    - sourceline: 'ppa:openjdk-r/ppa'
+    - sourceline: 'deb http://updatesite.sierrawireless.com/legato-spm/debian release/'
+      key_url: 'http://updatesite.sierrawireless.com/legato-spm/debian/legato-spm.key'
+    packages:
+    - build-essential
+    - python-jinja2
+    - ninja-build
+    - lib32z1
+    - lib32ncurses5
+    - zip
+    - autoconf
+    - automake
+    - openjdk-8-jre-headless
+    - legato-spm
+
+before_install:
+  - legato-spm --install --yes --stats false --module WP85XX --update-link
+  - source ~/legato/packages/legato.sdk.latest/resources/configlegatoenv
+
+script:
+  - make wp85
